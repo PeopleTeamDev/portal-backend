@@ -1,0 +1,8 @@
+{
+  "name": "portal-backend",
+  "version": "1.0.0",
+  "description": "The backend API for the People Team Portal.",
+  "scripts": {
+    "start": "node src/main.js"
+  }
+}

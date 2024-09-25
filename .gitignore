@@ -1,0 +1,18 @@
+# Dependencies 
+node_modules/
+
+# IDE and editor 
+.idea/
+.vscode/
+
+# Enviroment variable files 
+.env*
+
+# MacOS system files
+.DS_Store
+
+# Linux system files
+*.swp
+
+# Windows system files
+Thumbs.db
