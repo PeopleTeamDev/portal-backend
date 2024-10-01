@@ -1,6 +1,9 @@
 # Dependencies 
 node_modules/
 
+# Builds
+dist/ 
+
 # IDE and editor 
 .idea/
 .vscode/
