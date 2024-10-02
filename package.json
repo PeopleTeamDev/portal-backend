@@ -4,10 +4,12 @@
   "description": "The backend API for the People Team Portal.",
   "scripts": {
     "dev": "nodemon",
+    "format": "biome check --fix",
     "build": "rimraf dist && tsc",
     "start": "npm run build && node dist/main.js"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.3",
     "@types/node": "^22.7.4",
     "nodemon": "^3.1.7",
     "rimraf": "^6.0.1",
