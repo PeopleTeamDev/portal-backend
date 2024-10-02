@@ -5,14 +5,17 @@
   "scripts": {
     "dev": "nodemon",
     "format": "biome check --fix",
+    "test": "jest",
     "build": "rimraf dist && tsc",
     "start": "npm run build && node dist/main.js"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
+    "@jest/globals": "^29.7.0",
     "@types/node": "^22.7.4",
     "nodemon": "^3.1.7",
     "rimraf": "^6.0.1",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
   }
