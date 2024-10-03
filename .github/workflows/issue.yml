@@ -2,8 +2,7 @@ name: New Issue
 
 on:
   issues:
-    types: 
-      - opened
+    types: [opened]
 
 jobs:
   add-label:
