@@ -1,0 +1,20 @@
+name: CI - Pull Request
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  format:
+    uses: ./.github/workflows/format.yml
+
+  test:
+    uses: ./.github/workflows/test.yml
+
+  build:
+    uses: ./.github/workflows/build.yml
+
+  commitlint:
+    uses: ./.github/workflows/commitlint.yml
