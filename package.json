@@ -7,7 +7,7 @@
     "format": "biome check --fix",
     "test": "jest",
     "build": "rimraf dist && tsc",
-    "start": "npm run build && node dist/main.js"
+    "start": "node dist/main.js"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
