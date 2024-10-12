@@ -4,7 +4,8 @@
   "description": "The backend API for the People Team Portal.",
   "scripts": {
     "dev": "nodemon",
-    "format": "biome check --fix",
+    "format:check": "biome check",
+    "format:fix": "biome check --fix",
     "test": "jest",
     "build": "rimraf dist && tsc",
     "start": "node dist/main.js"
