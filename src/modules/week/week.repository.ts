@@ -3,6 +3,8 @@ import { Injectable } from "@nestjs/common";
 import { CreateWeekDTO } from "./objects/create-week.dto";
 import { FindOneWeekDTO } from "./objects/find-one-week.dto";
 import { WeekEntity } from "./week.entity";
+import { DeleteWeekDTO } from "./objects/delete-week.dto";
+import { Week } from "./week.interface";
 
 @Injectable()
 export class WeekRepository {
@@ -29,5 +31,10 @@ export class WeekRepository {
     await fork.persistAndFlush(week);
 
     return week;
+  }
+
+  async delete(week: WeekEntity) {
+    const fork = this.em.fork();
+    fork.removeAndFlush(week);
   }
 }

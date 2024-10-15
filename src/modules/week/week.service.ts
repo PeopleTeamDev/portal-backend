@@ -1,7 +1,8 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { CreateWeekDTO } from "./objects/create-week.dto";
 import { FindOneWeekDTO } from "./objects/find-one-week.dto";
 import { WeekRepository } from "./week.repository";
+import { DeleteWeekDTO } from "./objects/delete-week.dto";
 
 @Injectable()
 export class WeekService {
@@ -20,6 +21,14 @@ export class WeekService {
 
     // Create week
     const week = await this.weekRepository.create(createDTO);
+    return week;
+  }
+
+  async delete(deleteDTO: DeleteWeekDTO) {
+    const week = await this.weekRepository.findOne(deleteDTO);
+    if (!week) throw new NotFoundException("Week not found");
+
+    this.weekRepository.delete(week);
     return week;
   }
 }
