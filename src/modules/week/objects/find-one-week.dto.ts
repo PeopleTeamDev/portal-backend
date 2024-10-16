@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsDate, IsIn, IsInt, IsOptional } from "class-validator";
+import { IsDate, IsInt, IsOptional } from "class-validator";
 
 export class FindOneWeekDTO {
   @IsOptional()

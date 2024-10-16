@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsDate, IsInt, IsNumber, IsPositive } from "class-validator";
+import { IsDate, IsInt, IsPositive } from "class-validator";
 
 export class CreateWeekDTO {
   @Type(() => Number)

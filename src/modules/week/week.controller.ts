@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post, Put, Query, Delete } from "@nestjs/common";
+import { Body, Controller, Get, Post, Put, Query, Delete, Res } from "@nestjs/common";
 import { CreateWeekDTO } from "./objects/create-week.dto";
 import { FindOneWeekDTO } from "./objects/find-one-week.dto";
 import { WeekService } from "./week.service";
 import { DeleteWeekDTO } from "./objects/delete-week.dto";
+import { UpdateWeekDTO } from "./objects/update-week.dto";
 
 @Controller()
 export class WeekController {
@@ -21,6 +22,12 @@ export class WeekController {
     const week = await this.weekService.create(createDTO);
     return { week };
   }
+  
+  @Post("/weeks")
+  async update(@Body() updateDTO: UpdateWeekDTO) {
+    const week = await this.weekService.update(updateDTO);
+    return { week };
+  }
 
   @Delete("/week")
   async delete(@Query() deleteDTO : DeleteWeekDTO) {
@@ -28,6 +35,4 @@ export class WeekController {
     return { week };
   }
 
-  // update
-  // delete
 }

@@ -3,6 +3,7 @@ import { CreateWeekDTO } from "./objects/create-week.dto";
 import { FindOneWeekDTO } from "./objects/find-one-week.dto";
 import { WeekRepository } from "./week.repository";
 import { DeleteWeekDTO } from "./objects/delete-week.dto";
+import { UpdateWeekDTO } from "./objects/update-week.dto";
 
 @Injectable()
 export class WeekService {
@@ -24,10 +25,22 @@ export class WeekService {
     return week;
   }
 
+  async update(updateDTO: UpdateWeekDTO) {
+    // Find week to be updated
+    const week = await this.weekRepository.findOne({ number: updateDTO.new_number });
+    if (!week) throw new NotFoundException("Week not found");
+
+    // Update week 
+    const new_week = await this.weekRepository.update(updateDTO, week)
+    return new_week;
+  } 
+
   async delete(deleteDTO: DeleteWeekDTO) {
+    // Find week to be deleted if exists
     const week = await this.weekRepository.findOne(deleteDTO);
     if (!week) throw new NotFoundException("Week not found");
 
+    // Delete week
     this.weekRepository.delete(week);
     return week;
   }
