@@ -1,9 +1,9 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
-import { CreateWeekDTO } from "./objects/create-week.dto";
-import { FindOneWeekDTO } from "./objects/find-one-week.dto";
+import { CreateWeekDTO } from "./dtos/create-week.dto";
+import { FindManyWeekDTO } from "./dtos/find-many-week.dto";
+import { FindOneWeekDTO } from "./dtos/find-one-week.dto";
+import { UpdateWeekDTO } from "./dtos/update-week.dto";
 import { WeekRepository } from "./week.repository";
-import { DeleteWeekDTO } from "./objects/delete-week.dto";
-import { UpdateWeekDTO } from "./objects/update-week.dto";
 
 @Injectable()
 export class WeekService {
@@ -15,29 +15,35 @@ export class WeekService {
     return week;
   }
 
-  async create(createDTO: CreateWeekDTO) {
-    // Check if week exists
-    const weekExists = await this.weekRepository.findOne({ number: createDTO.number });
-    if (weekExists) throw new ConflictException("Week with this number already exists");
-
-    // Create week
-    const week = await this.weekRepository.create(createDTO);
-    return week;
+  async findMany(findManyDTO: FindManyWeekDTO) {
+    // Find many weeks
+    const weeks = await this.weekRepository.findMany(findManyDTO);
+    return { weeks };
   }
 
-  async update(updateDTO: UpdateWeekDTO) {
+  async create(createDTO: CreateWeekDTO) {
+    // Find week with same number
+    const week = await this.weekRepository.findOne({ number: createDTO.number });
+    if (week) throw new ConflictException("Week with this number already exists");
+
+    // Create week
+    const createdWeek = await this.weekRepository.create(createDTO);
+    return createdWeek;
+  }
+
+  async update(id: number, updateDTO: UpdateWeekDTO) {
     // Find week to be updated
-    const week = await this.weekRepository.findOne({ number: updateDTO.new_number });
+    const week = await this.weekRepository.findOne({ id });
     if (!week) throw new NotFoundException("Week not found");
 
-    // Update week 
-    const new_week = await this.weekRepository.update(updateDTO, week)
-    return new_week;
-  } 
+    // Update week
+    const updatedWeek = await this.weekRepository.update(week, updateDTO);
+    return updatedWeek;
+  }
 
-  async delete(deleteDTO: DeleteWeekDTO) {
-    // Find week to be deleted if exists
-    const week = await this.weekRepository.findOne(deleteDTO);
+  async delete(id: number) {
+    // Find week to be deleted
+    const week = await this.weekRepository.findOne({ id });
     if (!week) throw new NotFoundException("Week not found");
 
     // Delete week

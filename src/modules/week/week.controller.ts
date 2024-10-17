@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Post, Put, Query, Delete, Res } from "@nestjs/common";
-import { CreateWeekDTO } from "./objects/create-week.dto";
-import { FindOneWeekDTO } from "./objects/find-one-week.dto";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from "@nestjs/common";
+import { CreateWeekDTO } from "./dtos/create-week.dto";
+import { FindManyWeekDTO } from "./dtos/find-many-week.dto";
+import { FindOneWeekDTO } from "./dtos/find-one-week.dto";
+import { UpdateWeekDTO } from "./dtos/update-week.dto";
 import { WeekService } from "./week.service";
-import { DeleteWeekDTO } from "./objects/delete-week.dto";
-import { UpdateWeekDTO } from "./objects/update-week.dto";
 
 @Controller()
 export class WeekController {
@@ -15,24 +15,28 @@ export class WeekController {
     return { week };
   }
 
-  // findMany
+  @Get("/weeks")
+  async findMany(@Query() findManyDTO: FindManyWeekDTO) {
+    const { weeks } = await this.weekService.findMany(findManyDTO);
+    const next = weeks.length ? weeks[weeks.length - 1].id : null;
+    return { weeks, next };
+  }
 
-  @Post("/weeks")
+  @Post("/week")
   async create(@Body() createDTO: CreateWeekDTO) {
     const week = await this.weekService.create(createDTO);
     return { week };
   }
-  
-  @Post("/weeks")
-  async update(@Body() updateDTO: UpdateWeekDTO) {
-    const week = await this.weekService.update(updateDTO);
+
+  @Patch("/week/:id")
+  async update(@Param("id", ParseIntPipe) id: number, @Body() updateDTO: UpdateWeekDTO) {
+    const week = await this.weekService.update(id, updateDTO);
     return { week };
   }
 
-  @Delete("/week")
-  async delete(@Query() deleteDTO : DeleteWeekDTO) {
-    const week = await this.weekService.delete(deleteDTO);
+  @Delete("/week/:id")
+  async delete(@Param("id", ParseIntPipe) id: number) {
+    const week = await this.weekService.delete(id);
     return { week };
   }
-
 }

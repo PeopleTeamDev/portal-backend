@@ -1,5 +1,5 @@
 import { Entity, Property } from "@mikro-orm/core";
-import { CreateWeekDTO } from "./objects/create-week.dto";
+import { CreateWeekDTO } from "./dtos/create-week.dto";
 import { Week } from "./week.interface";
 
 @Entity({ tableName: "week" })

@@ -1,11 +1,10 @@
-import { EntityManager, FilterQuery, UpdateOptions } from "@mikro-orm/postgresql";
+import { EntityManager, FilterQuery, FindOptions } from "@mikro-orm/postgresql";
 import { Injectable } from "@nestjs/common";
-import { CreateWeekDTO } from "./objects/create-week.dto";
-import { FindOneWeekDTO } from "./objects/find-one-week.dto";
+import { CreateWeekDTO } from "./dtos/create-week.dto";
+import { FindManyWeekDTO } from "./dtos/find-many-week.dto";
+import { FindOneWeekDTO } from "./dtos/find-one-week.dto";
+import { UpdateWeekDTO } from "./dtos/update-week.dto";
 import { WeekEntity } from "./week.entity";
-import { DeleteWeekDTO } from "./objects/delete-week.dto";
-import { Week } from "./week.interface";
-import { UpdateWeekDTO } from "./objects/update-week.dto";
 
 @Injectable()
 export class WeekRepository {
@@ -25,6 +24,23 @@ export class WeekRepository {
     return week;
   }
 
+  async findMany(findManyDTO: FindManyWeekDTO) {
+    const fork = this.em.fork();
+    const { ids, numbers, cursor, limit } = findManyDTO;
+
+    const query: FilterQuery<WeekEntity> = {};
+    query.$and = [];
+    if (ids) query.$and.push({ id: { $in: ids } });
+    if (numbers) query.$and.push({ number: { $in: numbers } });
+    if (cursor) query.$and.push({ id: { $gt: cursor } });
+
+    const options: FindOptions<WeekEntity> = {};
+    if (limit) options.limit = limit;
+
+    const weeks = await fork.find(WeekEntity, query, options);
+    return weeks;
+  }
+
   async create(createDTO: CreateWeekDTO) {
     const fork = this.em.fork();
 
@@ -34,19 +50,18 @@ export class WeekRepository {
     return week;
   }
 
-  async update(updateDTO: UpdateWeekDTO, week: WeekEntity) {
+  async update(week: WeekEntity, updateDTO: UpdateWeekDTO) {
     const fork = this.em.fork();
-    const { new_number, new_beginAt, new_endAt } = updateDTO;
-  
-    if (new_number) week.number = new_number;
-    if (new_beginAt) week.beginAt = new_beginAt;
-    if (new_endAt) week.endAt = new_endAt;
+
+    fork.assign(week, updateDTO);
+    await fork.persistAndFlush(week);
 
     return week;
   }
 
   async delete(week: WeekEntity) {
     const fork = this.em.fork();
+
     fork.removeAndFlush(week);
   }
 }
