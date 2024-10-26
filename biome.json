@@ -4,7 +4,8 @@
     "include": ["src/**/*.ts", "**/*.json", "**/*.ts"]
   },
   "formatter": {
-    "indentStyle": "space"
+    "indentStyle": "space",
+    "lineWidth": 120
   },
   "linter": {
     "rules": {
@@ -16,6 +17,9 @@
   "javascript": {
     "formatter": {
       "quoteStyle": "double"
+    },
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
     }
   }
 }

@@ -1,9 +1,10 @@
-import { Options, PostgreSqlDriver } from "@mikro-orm/postgresql";
+import { Options } from "@mikro-orm/core";
+import { PostgreSqlDriver } from "@mikro-orm/postgresql";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const config: Options = {
+const DatabaseConfig: Options = {
   entities: ["./dist/**/*.entity.js"],
   entitiesTs: ["./src/**/*.entity.ts"],
   driver: PostgreSqlDriver,
@@ -14,9 +15,9 @@ const config: Options = {
   port: Number(process.env.DB_PORT),
   migrations: {
     tableName: "_migrations",
-    path: "./src/other/database/migrations",
+    path: `${__dirname}/migrations`,
     glob: "!(*.d).{js,ts}",
   },
 };
 
-export default config;
+export default DatabaseConfig;
