@@ -1,7 +1,7 @@
 import { Type } from "class-transformer";
-import { IsInt, IsOptional } from "class-validator";
+import { IsInt, IsOptional, IsString } from "class-validator";
 
-export class FindOneRankDTO {
+export class FindOneUserRankDTO {
   @IsOptional()
   @Type(() => Number)
   @IsInt()
@@ -9,5 +9,6 @@ export class FindOneRankDTO {
 
   @IsOptional()
   @Type(() => String)
+  @IsString()
   name?: string;
 }

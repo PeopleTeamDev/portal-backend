@@ -1,26 +1,27 @@
 import { Injectable } from "@nestjs/common";
 import { ConflictException } from "@nestjs/common";
 import { NotFoundException } from "@nestjs/common";
-import { CreateRankDTO } from "./dtos/create-rank.dto";
-import { FindManyRankDTO } from "./dtos/find-many-rank.dto";
-import { FindOneRankDTO } from "./dtos/find-one-rank.dto";
-import { RankRepository } from "./rank.repository";
+import { CreateUserRankDTO } from "./dtos/create-rank.dto";
+import { FindManyUserRankDTO } from "./dtos/find-many-rank.dto";
+import { FindOneUserRankDTO } from "./dtos/find-one-rank.dto";
+import { UpdateUserRankDTO } from "./dtos/update-rank.dto";
+import { UserRankRepository } from "./rank.repository";
 
 @Injectable()
-export class RankService {
-  constructor(private readonly rankRepository: RankRepository) {}
+export class UserRankService {
+  constructor(private readonly rankRepository: UserRankRepository) {}
 
-  async findOne(findOneDTO: FindOneRankDTO) {
+  async findOne(findOneDTO: FindOneUserRankDTO) {
     const rank = await this.rankRepository.findOne(findOneDTO);
     return rank;
   }
 
-  async findMany(findManyDTO: FindManyRankDTO) {
+  async findMany(findManyDTO: FindManyUserRankDTO) {
     const ranks = await this.rankRepository.findMany(findManyDTO);
     return { ranks };
   }
 
-  async create(createDTO: CreateRankDTO) {
+  async create(createDTO: CreateUserRankDTO) {
     const rank = await this.rankRepository.findOne({ name: createDTO.name });
     if (rank) throw new ConflictException("Rank with this name already exists");
 
@@ -28,7 +29,7 @@ export class RankService {
     return createdRank;
   }
 
-  async update(id: number, updateDTO: FindOneRankDTO) {
+  async update(id: number, updateDTO: UpdateUserRankDTO) {
     const rank = await this.rankRepository.findOne({ id });
     if (!rank) throw new NotFoundException("Rank not found");
 

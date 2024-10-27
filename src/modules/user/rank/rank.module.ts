@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
-import { RankController } from "./rank.controller";
-import { RankRepository } from "./rank.repository";
-import { RankService } from "./rank.service";
+import { UserRankController } from "./rank.controller";
+import { UserRankRepository } from "./rank.repository";
+import { UserRankService } from "./rank.service";
 
 @Module({
-  controllers: [RankController],
-  providers: [RankRepository, RankService],
+  controllers: [UserRankController],
+  providers: [UserRankRepository, UserRankService],
 })
-export class RankModule {}
+export class UserRankModule {}

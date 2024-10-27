@@ -1,9 +1,9 @@
 import { Entity, Property } from "@mikro-orm/core";
-import { CreateRankDTO } from "./dtos/create-rank.dto";
-import { Rank } from "./rank.interface";
+import { CreateUserRankDTO } from "./dtos/create-rank.dto";
+import { UserRank } from "./rank.interface";
 
-@Entity({ tableName: "rank" })
-export class RankEntity implements Rank {
+@Entity({ schema: "user", tableName: "rank" })
+export class UserRankEntity implements UserRank {
   @Property({ primary: true })
   id!: number;
 
@@ -13,7 +13,7 @@ export class RankEntity implements Rank {
   @Property()
   description!: string;
 
-  constructor(createDTO: CreateRankDTO) {
+  constructor(createDTO: CreateUserRankDTO) {
     this.name = createDTO.name;
     this.description = createDTO.description;
   }
