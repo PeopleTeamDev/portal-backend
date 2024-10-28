@@ -1,4 +1,5 @@
-import { Entity, Property } from "@mikro-orm/core";
+import { Entity, OneToMany, Property } from "@mikro-orm/core";
+import { UserRankAccessEntity } from "../rank-access/rank-access.entity";
 import { CreateUserRankDTO } from "./dtos/create-rank.dto";
 import { UserRank } from "./rank.interface";
 
@@ -17,4 +18,10 @@ export class UserRankEntity implements UserRank {
     this.name = createDTO.name;
     this.description = createDTO.description;
   }
+
+  @OneToMany(
+    () => UserRankAccessEntity,
+    (access) => access.rank,
+  )
+  permissions!: UserRankAccessEntity[];
 }
