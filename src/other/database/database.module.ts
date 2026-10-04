@@ -1,8 +1,8 @@
 import { MikroOrmModule } from "@mikro-orm/nestjs";
 import { Global, Module } from "@nestjs/common";
-import mikroORMConfig from "../../../mikro-orm.config";
+import DatabaseConfig from "./database.config";
 
-const MikroORM = MikroOrmModule.forRoot(mikroORMConfig);
+const MikroORM = MikroOrmModule.forRoot(DatabaseConfig);
 
 @Global()
 @Module({
